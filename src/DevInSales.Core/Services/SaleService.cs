@@ -20,12 +20,12 @@ namespace DevInSales.Core.Services
             
             if (sale.SaleDate == DateTime.MinValue)
                 sale.SetSaleDateToToday();
-            if (sale.BuyerId == 0 || sale.SellerId == 0)
-                throw new ArgumentNullException("Id não pode ser nulo nem zero.");
-            if (!_context.Users.Any(user => user.Id == sale.BuyerId))
-                throw new ArgumentException("BuyerId não encontrado.");
-            if (!_context.Users.Any(user => user.Id == sale.SellerId))
-                throw new ArgumentException("SellerId não encontrado.");
+            //if (sale.BuyerId == 0 || sale.SellerId == 0)
+            //    throw new ArgumentNullException("Id não pode ser nulo nem zero.");
+            //if (!_context.users.any(user => user.id == sale.buyerid))
+            //    throw new argumentexception("buyerid não encontrado.");
+            //if (!_context.users.any(user => user.id == sale.sellerid))
+            //    throw new argumentexception("sellerid não encontrado.");
 
             _context.Sales.Add(sale);
             _context.SaveChanges();
@@ -59,12 +59,12 @@ namespace DevInSales.Core.Services
                 .ToList();
         }
 
-        public List<Sale> GetSaleBySellerId(int? userId)
+        public List<Sale> GetSaleBySellerId(string? userId)
         {
             return _context.Sales.Where(p => p.SellerId == userId).ToList();
         }
 
-        public List<Sale> GetSaleByBuyerId(int? userId)
+        public List<Sale> GetSaleByBuyerId(string? userId)
         {
             return _context.Sales.Where(p => p.BuyerId == userId).ToList();
         }

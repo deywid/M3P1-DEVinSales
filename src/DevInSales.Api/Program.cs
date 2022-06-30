@@ -1,8 +1,10 @@
+using DevInSales.Api.Extensions;
 using DevInSales.Core.Data.Context;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
 using DevInSales.Core.Services;
 using DevInSales.EFCoreApi.Core.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -17,6 +19,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLConnection"))
 );
+
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
 
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IDeliveryService, DeliveryService>();

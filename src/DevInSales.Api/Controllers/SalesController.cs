@@ -41,7 +41,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="200">Sucesso.</response>
         /// <response code="204">No Content, caso o usuário ainda não tenha cadastrado uma venda.</response>
         [HttpGet("/api/user/{userId}/sales")]
-        public ActionResult<Sale> GetSalesBySellerId(int? userId)
+        public ActionResult<Sale> GetSalesBySellerId(string? userId)
         {
             var sales = _saleService.GetSaleBySellerId(userId);
             if (sales.Count == 0)
@@ -56,7 +56,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="200">Sucesso.</response>
         /// <response code="204">No Content, caso o usuário ainda não tenha cadastrado uma compra.</response>
         [HttpGet("/api/user/{userId}/buy")]
-        public ActionResult<Sale> GetSalesByBuyerId(int? userId)
+        public ActionResult<Sale> GetSalesByBuyerId(string? userId)
         {
             var sales = _saleService.GetSaleByBuyerId(userId);
             if (sales.Count == 0)
@@ -74,7 +74,7 @@ namespace DevInSales.Api.Controllers
         [HttpPost("/api/user/{userId}/sales")]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public ActionResult<int> CreateSaleBySellerId(int userId, SaleBySellerRequest saleRequest)
+        public ActionResult<int> CreateSaleBySellerId(string userId, SaleBySellerRequest saleRequest)
         {
             try
             {
@@ -157,7 +157,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="404">Not Found, caso não exista um usuário com o Id enviado.</response>
         [HttpPost("/api/user/{userId}/buy")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public ActionResult<int> CreateSaleByBuyerId(int userId, SaleByBuyerRequest saleRequest)
+        public ActionResult<int> CreateSaleByBuyerId(string userId, SaleByBuyerRequest saleRequest)
         {
             try
             {

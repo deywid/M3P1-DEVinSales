@@ -9,16 +9,16 @@ namespace DevInSales.Core.Data.Dtos
 {
     public class SaleByBuyerRequest
     {
-        public SaleByBuyerRequest(int sellerId, DateTime saleDate)
+        public SaleByBuyerRequest(string sellerId, DateTime saleDate)
         {
             SellerId = sellerId;
             SaleDate = saleDate;
         }
 
-        public int SellerId { get; private set; }
+        public string SellerId { get; private set; }
         public DateTime SaleDate { get; private set; }
 
-        public Sale ConvertToEntity(int userId)
+        public Sale ConvertToEntity(string userId)
         {
             return new Sale(userId, SellerId, SaleDate);
         }

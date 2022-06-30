@@ -6,10 +6,10 @@ namespace DevInSales.EFCoreApi.Core.Interfaces
     {
         public List<User> ObterUsers(string? name, string? DateMin, string? DateMax);
 
-        public User? ObterPorId(int id);
+        public User? ObterPorId(string id);
 
-        public int CriarUser(User user);
+        public string CriarUser(User user);
 
-        public void RemoverUser(int id);
+        public void RemoverUser(string id);
     }
 }

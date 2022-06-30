@@ -11,7 +11,7 @@ namespace DevInSales.Core.Entities
             _context = context;
         }
 
-        public int CriarUser(User user)
+        public string CriarUser(User user)
         {
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -19,7 +19,7 @@ namespace DevInSales.Core.Entities
         }
 
 
-        public User? ObterPorId(int id)
+        public User? ObterPorId(string id)
         {
             return _context.Users.Find(id);
         }
@@ -37,9 +37,9 @@ namespace DevInSales.Core.Entities
 
             return query.ToList();
         }
-        public void RemoverUser(int id)
+        public void RemoverUser(string id)
         {
-            if (id >= 0)
+            if (id is not null)
             {
                 var user = _context.Users.FirstOrDefault(user => user.Id == id);
                 if (user != null)
