@@ -20,12 +20,10 @@ namespace DevInSales.Core.Services
             
             if (sale.SaleDate == DateTime.MinValue)
                 sale.SetSaleDateToToday();
-            //if (sale.BuyerId == 0 || sale.SellerId == 0)
-            //    throw new ArgumentNullException("Id não pode ser nulo nem zero.");
-            //if (!_context.users.any(user => user.id == sale.buyerid))
-            //    throw new argumentexception("buyerid não encontrado.");
-            //if (!_context.users.any(user => user.id == sale.sellerid))
-            //    throw new argumentexception("sellerid não encontrado.");
+            if (string.IsNullOrWhiteSpace(sale.BuyerId) || string.IsNullOrWhiteSpace(sale.SellerId))
+                throw new ArgumentNullException("O Id do Comprador ou Vendedor é inválido");
+            if (!_context.Users.Any(user => user.Id == sale.BuyerId) && !_context.Users.Any(user => user.Id == sale.SellerId))
+                throw new ArgumentNullException("Comprador ou Vendedor não cadastrados.");
 
             _context.Sales.Add(sale);
             _context.SaveChanges();
