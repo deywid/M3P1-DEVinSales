@@ -4,21 +4,19 @@ namespace DevInSales.Core.Entities
 {
     public class User : IdentityUser
     {
-        public string Name { get; private set; }
-        public DateTime BirthDate { get; private set; }
+        public string Nome { get; set; }
+        public DateTime DataNascimento { get; set; }
 
-        public User(string email, string name, DateTime birthDate)
+        public User(string nome, string email, string senha, DateTime dataNascimento): base()
         {
+            Nome = nome;
             Email = email;
-            Name = name;
-            BirthDate = birthDate;
+            PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(this, senha);
+            DataNascimento = dataNascimento;
+            UserName = email;
+            NormalizedEmail = email.ToUpper();
         }
-        public User(string id, string email, string name, DateTime birthDate)
-        {
-            Id = id;
-            Email = email;
-            Name = name;
-            BirthDate = birthDate;
-        }   
+
+        public User() { }
     }
 }

@@ -448,12 +448,12 @@ namespace DevInSales.Core.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("date");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("DataNascimento")
+                        .HasColumnType("date");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -468,7 +468,7 @@ namespace DevInSales.Core.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
@@ -509,6 +509,42 @@ namespace DevInSales.Core.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "933224A3-0F24-478B-BB6E-E337C0E5BC66",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "07e3aaa8-52f5-45e2-9fca-75aeaa58b12a",
+                            DataNascimento = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin@devin.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            Nome = "admin",
+                            NormalizedUserName = "ADMIN@DEVIN.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBamwu/SgfiErSuOLnvUsS3FW6nkXIVzbGuSG0y6r8rPK3RJSPtkI2hQxIiD5QkmBg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "18967947-c961-4724-b602-b2b4e8ea7e80",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@devin.com"
+                        },
+                        new
+                        {
+                            Id = "D998A0EE-C00B-4CFF-B35E-3DD2DA3CE74B",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b46fee85-05c0-4c6a-a040-17702aaa37bd",
+                            DataNascimento = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "manager@devin.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            Nome = "manager",
+                            NormalizedUserName = "MANAGER@DEVIN.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKo9IXKbI9gNLJ0qIdL/woO18xIiJAOV/eUbbkt8mdb1qwsiH5hHYlIYDqoTbqDD4w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "fb7d1a7c-53fd-458d-9ffe-3a330769b414",
+                            TwoFactorEnabled = false,
+                            UserName = "manager@devin.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -535,6 +571,29 @@ namespace DevInSales.Core.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "B83F4D09-88FD-4F39-956D-8594EAD05B07",
+                            ConcurrencyStamp = "18f56eb2-2db3-43a4-802b-2377b92101cf",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "B16E8CBA-A5E2-4997-9CB8-CA45CC641953",
+                            ConcurrencyStamp = "ad2f9b6e-4d72-4fa1-abae-95be90d0c5cb",
+                            Name = "Manager",
+                            NormalizedName = "MANAGER"
+                        },
+                        new
+                        {
+                            Id = "32AB2538-8F9D-4509-A8E6-43BF428A3C71",
+                            ConcurrencyStamp = "b3e51d40-c70f-4c3d-b880-db71bfac32a2",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -622,6 +681,18 @@ namespace DevInSales.Core.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "933224A3-0F24-478B-BB6E-E337C0E5BC66",
+                            RoleId = "B83F4D09-88FD-4F39-956D-8594EAD05B07"
+                        },
+                        new
+                        {
+                            UserId = "D998A0EE-C00B-4CFF-B35E-3DD2DA3CE74B",
+                            RoleId = "B16E8CBA-A5E2-4997-9CB8-CA45CC641953"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

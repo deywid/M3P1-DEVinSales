@@ -22,7 +22,7 @@ namespace DevInSales.EFCoreApi.Api.DTOs.Request
 
         public static UserResponse ConverterParaEntidade(User user)
         {
-            return new UserResponse(user.Id, user.Email, user.Name, user.BirthDate);
+            return new UserResponse(user.Id, user.Email, user.Nome, user.DataNascimento);
         }
     }
 }

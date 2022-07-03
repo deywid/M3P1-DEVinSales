@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DevInSales.Core.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initials : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,8 +57,8 @@ namespace DevInSales.Core.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "varchar(255)", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "date", nullable: false),
+                    Nome = table.Column<string>(type: "varchar(255)", nullable: false),
+                    DataNascimento = table.Column<DateTime>(type: "date", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -305,6 +305,16 @@ namespace DevInSales.Core.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "32AB2538-8F9D-4509-A8E6-43BF428A3C71", "b3e51d40-c70f-4c3d-b880-db71bfac32a2", "User", "USER" },
+                    { "B16E8CBA-A5E2-4997-9CB8-CA45CC641953", "ad2f9b6e-4d72-4fa1-abae-95be90d0c5cb", "Manager", "MANAGER" },
+                    { "B83F4D09-88FD-4F39-956D-8594EAD05B07", "18f56eb2-2db3-43a4-802b-2377b92101cf", "Admin", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "Name", "SuggestedPrice" },
                 values: new object[,]
@@ -353,6 +363,24 @@ namespace DevInSales.Core.Migrations
                     { 25, "SP", "São Paulo" },
                     { 26, "SE", "Sergipe" },
                     { 27, "TO", "Tocantins" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DataNascimento", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Nome", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "933224A3-0F24-478B-BB6E-E337C0E5BC66", 0, "07e3aaa8-52f5-45e2-9fca-75aeaa58b12a", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@devin.com", false, false, null, "admin", null, "ADMIN@DEVIN.COM", "AQAAAAEAACcQAAAAEBamwu/SgfiErSuOLnvUsS3FW6nkXIVzbGuSG0y6r8rPK3RJSPtkI2hQxIiD5QkmBg==", null, false, "18967947-c961-4724-b602-b2b4e8ea7e80", false, "admin@devin.com" },
+                    { "D998A0EE-C00B-4CFF-B35E-3DD2DA3CE74B", 0, "b46fee85-05c0-4c6a-a040-17702aaa37bd", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "manager@devin.com", false, false, null, "manager", null, "MANAGER@DEVIN.COM", "AQAAAAEAACcQAAAAEKo9IXKbI9gNLJ0qIdL/woO18xIiJAOV/eUbbkt8mdb1qwsiH5hHYlIYDqoTbqDD4w==", null, false, "fb7d1a7c-53fd-458d-9ffe-3a330769b414", false, "manager@devin.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "B83F4D09-88FD-4F39-956D-8594EAD05B07", "933224A3-0F24-478B-BB6E-E337C0E5BC66" },
+                    { "B16E8CBA-A5E2-4997-9CB8-CA45CC641953", "D998A0EE-C00B-4CFF-B35E-3DD2DA3CE74B" }
                 });
 
             migrationBuilder.CreateIndex(

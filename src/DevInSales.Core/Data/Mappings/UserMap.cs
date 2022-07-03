@@ -10,11 +10,11 @@ namespace DevInSales.Core.Data.Mappings
         {
             builder.ToTable("Users");
 
-            builder.Property(u => u.Name)
+            builder.Property(u => u.Nome)
                 .HasColumnType("varchar(255)")
                 .IsRequired();
 
-            builder.Property(u => u.BirthDate)
+            builder.Property(u => u.DataNascimento)
                 .HasColumnType("date")
                 .IsRequired();
         }

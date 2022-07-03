@@ -47,7 +47,7 @@ namespace DevInSales.Core.Services
 
             var listaProdutos = GetSaleProductsBySaleId(id);
 
-            return new SaleResponse(sale.Id, sale.Seller.Name, sale.Buyer.Name, sale.SaleDate, listaProdutos);
+            return new SaleResponse(sale.Id, sale.Seller.Nome, sale.Buyer.Nome, sale.SaleDate, listaProdutos);
         }
 
         public List<SaleProductResponse> GetSaleProductsBySaleId(int id)
