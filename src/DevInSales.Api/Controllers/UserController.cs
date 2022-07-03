@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DevInSales.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("/api/[controller]")]
     public class UserController : ControllerBase
@@ -21,6 +22,7 @@ namespace DevInSales.Api.Controllers
             _userManager = userManager;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> CadastrarUsuario(UserRequest model)
@@ -44,6 +46,7 @@ namespace DevInSales.Api.Controllers
             return Accepted();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> LoginUsuario(UserLoginRequest model)
@@ -72,7 +75,6 @@ namespace DevInSales.Api.Controllers
             return Ok(ListaDto);
         }
 
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterUserPorId(string id)
         {
@@ -85,7 +87,7 @@ namespace DevInSales.Api.Controllers
             return Ok(UserDto);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> ExcluirUser(string id)
         {

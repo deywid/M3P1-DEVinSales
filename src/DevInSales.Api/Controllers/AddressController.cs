@@ -1,11 +1,13 @@
 using DevInSales.Api.Dtos;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevInSales.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class AddressController : ControllerBase
@@ -25,34 +27,6 @@ namespace DevInSales.Api.Controllers
             _cityService = cityService;
         }
 
-        /// <summary>
-        /// Buscar endereços.
-        /// </summary>
-        /// <remarks>
-        /// Pesquisas opcionais: stateId, cityId, street, cep.
-        /// <para>
-        /// Exemplo de resposta:
-        /// [
-        ///   {
-        ///     "street": "Rua Devin",
-        ///     "number": "100",
-        ///     "complement": "Apto. 101",
-        ///     "cep": "95800000"
-        ///     "city": {
-        ///         "id": 1,
-        ///         "name": "Jaraguá do Sul"
-        ///     },
-        ///     "state": {
-        ///         "id": 1,
-        ///         "name": "Santa Catarina"
-        ///         "initials": "SC"
-        ///   }
-        /// ]
-        /// </para>
-        /// </remarks>
-        /// <returns>Lista de endereços</returns>
-        /// <response code="200">Sucesso.</response>
-        /// <response code="204">Pesquisa realizada com sucesso porém não retornou nenhum resultado</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -65,24 +39,7 @@ namespace DevInSales.Api.Controllers
             return Ok(addresses);
         }
 
-        /// <summary>
-        /// Cadastrar um endereço.
-        /// </summary>
-        /// <remarks>
-        /// Exemplo:
-        /// {
-        ///     "street": "Rua Devin",
-        ///     "number": "100",
-        ///     "complement": "Apto. 101",
-        ///     "cep": "95800000",
-        /// }
-        /// </remarks>
-        /// <param name="model">Dados do endereço</param>
-        /// <returns>Id do endereço criado</returns>
-        /// <response code="201">Cadastrado com sucesso.</response>
-        /// <response code="400">Bad Request, stateId informado é diferente do stateId da cidade cadastrada no banco de dados.</response>
-        /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
-        /// <response code="404">Not Found, cidade não encontrada no cityId informado.</response>
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("/api/state/{stateId}/city/{cityId}/address")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -112,12 +69,7 @@ namespace DevInSales.Api.Controllers
             return CreatedAtAction(nameof(GetAll), new { stateId, cityId }, address.Id);
         }
 
-        /// <summary>
-        /// Deletar um endereço
-        /// </summary>
-        /// <response code="204">Endereço deletado com sucesso</response>
-        /// <response code="400">Bad Request, não é possível deletar este endereço pois ele está na lista de entrega</response>
-        /// <response code="404">Not Found, endereço não encontrado.</response>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{addressId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -139,26 +91,7 @@ namespace DevInSales.Api.Controllers
             }
         }
 
-        /// <summary>
-        /// Atualiza as propriedades do endereço especificado.
-        /// </summary>
-        /// <remarks>
-        /// Propriedades opcionais: Street, Cep, Number, Complement.
-        /// Exemplo:
-        ///    PATCH api/Address/addressId
-        ///    {
-        ///       "street": "string",
-        ///       "number": 0,
-        ///       "complement": "string",
-        ///       "cep": "string"
-        ///     }
-        /// </remarks>
-        /// <param name="addressId"></param>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        /// <response code="204">A atualização teve sucesso.</response>
-        /// <response code="400">Bad Request. Nenhuma propriedade foi informada no corpo ou o formato é inválido.</response>
-        /// <response code="404">Not Found. O endereço solicitado não existe.</response>
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPatch("{addressId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

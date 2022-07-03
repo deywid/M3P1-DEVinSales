@@ -1,10 +1,12 @@
 using DevInSales.Api.Dtos;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevInSales.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ProductController : ControllerBase
@@ -58,7 +60,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="204">No Content, caso não encontrado nenhum resultado.</response>
         /// <response code="400">Bad Request, não é possível deletar este endereço pois ele está na lista de entrega</response>
 
-
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPut("{id}")]
         public ActionResult AtualizarProduto(AddProduct model, int id)
         {
@@ -88,7 +90,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="400">Bad Request, stateId informado é diferente do stateId da cidade cadastrada no banco de dados.</response>
         /// <response code="500"> Internal Server Error, erro interno do servidor. </response>
 
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
@@ -157,6 +159,7 @@ namespace DevInSales.Api.Controllers
         /// <returns> product id </returns>
         /// <response code="201">Cadastrado com sucesso.</response>
         /// <response code="400">Bad Request Esse produto já existe na base de dados</response>
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost]
         public ActionResult PostProduct(AddProduct model)
         {

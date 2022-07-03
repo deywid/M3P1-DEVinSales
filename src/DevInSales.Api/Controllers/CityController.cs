@@ -1,10 +1,12 @@
 using DevInSales.Api.Dtos;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevInSales.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     public class CityController : ControllerBase
     {
@@ -17,30 +19,6 @@ namespace DevInSales.Api.Controllers
             _cityService = cityService;
         }
 
-        /// <summary>
-        /// Buscar cidades.
-        /// </summary>
-        /// <remarks>
-        /// Pesquisa opcional: name.
-        /// <para>
-        /// Exemplo de resposta:
-        /// [
-        ///   {
-        ///     "id": 1,
-        ///     "name": "Jaraguá do Sul"
-        ///     },
-        ///     "state": {
-        ///         "id": 1,
-        ///         "name": "Santa Catarina"
-        ///         "initials": "SC"
-        ///   }
-        /// ]
-        /// </para>
-        /// </remarks>
-        /// <returns>Lista de endereços</returns>
-        /// <response code="200">Sucesso.</response>
-        /// <response code="204">Pesquisa realizada com sucesso porém não retornou nenhum resultado</response>
-        /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
         [HttpGet("/api/State/{stateId}/city")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -58,26 +36,6 @@ namespace DevInSales.Api.Controllers
             return Ok(citiesList);
         }
 
-        /// <summary>
-        /// Buscar cidade por id.
-        /// </summary>
-        /// <remarks>
-        /// Exemplo de resposta:
-        ///  {
-        ///    "id": 1,
-        ///    "name": "Jaraguá do Sul"
-        ///    },
-        ///    "state": {
-        ///        "id": 1,
-        ///        "name": "Santa Catarina"
-        ///        "initials": "SC"
-        ///  }
-        /// </remarks>
-        /// <returns>Lista de endereços</returns>
-        /// <response code="200">Sucesso.</response>
-        /// <response code="400">Bad Request, stateId informado é diferente do stateId da cidade cadastrada no banco de dados.</response>
-        /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
-        /// <response code="404">Not Found, cidade não encontrada no cityId informado.</response>
         [HttpGet("/api/State/{stateId}/city/{cityId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -98,20 +56,7 @@ namespace DevInSales.Api.Controllers
             return Ok(city);
         }
 
-        /// <summary>
-        /// Cadastrar uma cidade.
-        /// </summary>
-        /// <remarks>
-        /// Exemplo:
-        /// {
-        ///    "name": "Jaraguá do Sul"
-        /// }
-        /// </remarks>
-        /// <param name="model">Dados da cidade</param>
-        /// <returns>Id da cidade criada</returns>
-        /// <response code="201">Cadastrado com sucesso.</response>
-        /// <response code="400">Bad Request, cidade já cadastrada no banco de dados.</response>
-        /// <response code="404">Not Found, estado não encontrado no stateId informado.</response>
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("/api/State/{stateId}/city")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

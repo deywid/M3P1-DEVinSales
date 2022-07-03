@@ -2,10 +2,12 @@
 using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevInSales.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/sales/")]
 
@@ -71,6 +73,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="201">Criado com sucesso.</response>
         /// <response code="400">Bad Request, quando não é enviado um buyerId.</response>
         /// <response code="404">Not Found, caso não exista um usuário com o Id enviado.</response>
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("/api/user/{userId}/sales")]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
@@ -99,6 +102,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="204">Alterado com sucesso.</response>
         /// <response code="400">Bad Request, caso o preço digitado seja menor ou igual a zero.</response>
         /// <response code="404">Not Found, caso não exista uma venda com o saleId enviado ou um SaleProduct com o productId enviado</response>
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPatch("{saleId}/product/{productId}/price/{unitPrice}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
 
@@ -126,9 +130,9 @@ namespace DevInSales.Api.Controllers
         /// <response code="204">Alterado com sucesso.</response>
         /// <response code="400">Bad Request, caso a quantidade digitada seja menor ou igual a zero.</response>
         /// <response code="404">Not Found, caso não exista uma venda com o saleId enviado ou um SaleProduct com o productId enviado.</response>
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPatch("{saleId}/product/{productId}/amount/{amount}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-
         public ActionResult UpdateAmount(int saleId, int productId, int amount)
         {
 
@@ -155,6 +159,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="201">Criado com sucesso.</response>
         /// <response code="400">Bad Request, quando não enviado um sellerId.</response>
         /// <response code="404">Not Found, caso não exista um usuário com o Id enviado.</response>
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("/api/user/{userId}/buy")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<int> CreateSaleByBuyerId(string userId, SaleByBuyerRequest saleRequest)
@@ -181,7 +186,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="201">Criado com sucesso.</response>
         /// <response code="400">Bad Request, caso não enviado um AddressId ou a data enviada seja anterior a data atual.</response>
         /// <response code="404">Not Found, caso não exista um saleId ou um addressId igual ao enviado.</response>
-
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("{saleId}/deliver")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<int> CreateDeliveryForASale(int saleId, DeliveryRequest deliveryRequest)

@@ -1,10 +1,12 @@
 ﻿using DevInSales.Core.Data.Dtos;
 using DevInSales.Core.Entities;
 using DevInSales.Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevInSales.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/sales/")]
 
@@ -35,6 +37,7 @@ namespace DevInSales.Api.Controllers
         /// <response code="201">Criado com sucesso.</response>
         /// <response code="400">Bad Request, caso não seja enviado um productId ou quando a quantidade/preço enviados forem menor ou igual a zero.</response>
         /// <response code="404">Not Found, caso o productId ou o saleId não existam.</response>
+        [Authorize(Roles = "Admin, Manager")]
         [HttpPost("{saleId}/item")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<int> CreateSaleProduct(int saleId, SaleProductRequest saleProduct)
@@ -65,13 +68,6 @@ namespace DevInSales.Api.Controllers
 
             }
 
-
-
-
-
         }
-
-
-
     }
 }
