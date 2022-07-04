@@ -38,7 +38,7 @@ namespace DevInSales.Api.Controllers
         public ActionResult<Product> ObterProdutoPorId(int id)
         {
             var produto = _productService.ObterProductPorId(id);
-            if (produto == null)
+            if (produto is null)
                 return NotFound();
             return Ok(produto);
         }
@@ -64,17 +64,18 @@ namespace DevInSales.Api.Controllers
         [HttpPut("{id}")]
         public ActionResult AtualizarProduto(AddProduct model, int id)
         {
-            var productOld = _productService.ObterProductPorId(id);
+            var produto = _productService.ObterProductPorId(id);
 
-            if (model == null)
+            if (produto is null)
                 return NotFound();
+
             if (!ModelState.IsValid || model.Name.ToLower() == "string")
                 return BadRequest("O objeto tem que ser construido com um nome e nome tem que ser diferente de string");
             if (_productService.ProdutoExiste(model.Name))
                 return BadRequest("esse nome já existe na base de dados");
 
 
-            productOld.AtualizarDados(model.Name, model.SuggestedPrice);
+            produto.AtualizarDados(model.Name, model.SuggestedPrice);
 
             _productService.Atualizar();
 
